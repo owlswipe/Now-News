@@ -5,7 +5,7 @@ require_relative 'models/model.rb'
 class MyApp < Sinatra::Base
   use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
-                           :secret => 'seeeeeecret'
+                           :secret => '[there is a secret key that usually goes into here.]'
 
   get '/' do
     if session[:zipcode]
