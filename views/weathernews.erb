@@ -1,0 +1,368 @@
+<head>
+  <title>Now News</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="text/javascript" href="script.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+</head>
+
+<body class="weathernews">
+  <nav>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo"> Now News</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="setup">Change location</a></li>
+      <li><a href="mailto:one.studio@outlook.com">Contact us</a></li>
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li><a href="setup">Change location</a></li>
+      <li><a href="mailto:one.studio@outlook.com">Contact us</a></li>
+</ul>
+  </div>
+</nav>
+
+  <div class="weather-header">
+    <div class="container">
+    <h2><%=@welcome%>, <%=@nameofuser%>.</h2><br>
+
+
+
+
+    <h5>Here's the weather in your location</h5><br><br>
+  </div>
+  </div>
+  <div class="container">
+    <div class="weather-container">
+<iframe id="forecast_embed" frameborder="0" height="244" width="100%" src="https://forecast.io/embed/#lat=<%=@lat%>&amp;lon=<%=@long%>&amp;name=<%=@cityofuser%>&amp;color=black;font=Avenir&amp;units=us"> </iframe></p>
+<!-- <h2>Here's the weather forecast for <%=@weathercity%></h2><h5><%=@weatherresult%></h5><br><a target="_blank" href="<%=@weatherlink%>">See full forecast on wunderground.com</a><br><br><h1>And here's the top news:</h1><br><h5><%=@news%></h5> -->
+</div>
+  <div class="news-header">
+    <br>
+    <h5>Here's your news brief, updated at <%=@updatetime%></h5>
+    <br>
+  </div>
+  <div style="margin-left:auto;margin-right:auto;">
+  <div class="news-container">
+    <h6><b class="mini-header">From The New York Times</b></h6>
+    <!-- <h7><strong><%=@nytimestitle1%></strong></h7>
+    <p><%=@nytimesarticle1%></p>
+    <a target="_blank" href="<%=@nytimeslink1%>">See full article.</a> -->
+    <div class="row">
+  <div class="col s12 m12">
+    <div class="card-panel white">
+      <span class="black-text">
+      <h7><strong><%=@nytimestitle1%></strong></h7>
+      <p><%=@nytimesarticle1%></p>
+      <a target="_blank" href="<%=@nytimeslink1%>">See full article.</a>
+      </span>
+    </div>
+  </div>
+  </a>
+</div>
+
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel white">
+  <span class="black-text">
+    <h7><strong><%=@nytimestitle2%></strong></h7>
+    <p><%=@nytimesarticle2%></p>
+    <a target="_blank" href="<%=@nytimeslink2%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel white">
+  <span class="black-text">
+    <h7><strong><%=@nytimestitle3%></strong></h7>
+    <p><%=@nytimesarticle3%></p>
+    <a target="_blank" href="<%=@nytimeslink3%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel white">
+  <span class="black-text">
+    <h7><strong><%=@nytimestitle4%></strong></h7>
+    <p><%=@nytimesarticle4%></p>
+    <a target="_blank" href="<%=@nytimeslink4%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel white">
+  <span class="black-text">
+    <h7><strong><%=@nytimestitle5%></strong></h7>
+    <p><%=@nytimesarticle5%></p>
+    <a target="_blank" href="<%=@nytimeslink5%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<br>
+<h6><b>From Bing News</b></h6>
+<!-- <h7><strong><%=@nytimestitle1%></strong></h7>
+<p><%=@nytimesarticle1%></p>
+<a target="_blank" href="<%=@nytimeslink1%>">See full article.</a> -->
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel teal lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@bingname1%></strong></h7>
+  <p><%=@bingdescription1%></p>
+  <a target="_blank" class="orange-text text-darken-4" href="<%=@bingurl1%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel teal lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@bingname2%></strong></h7>
+  <p><%=@bingdescription2%></p>
+  <a target="_blank" class="orange-text text-darken-4" href="<%=@bingurl2%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel teal lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@bingname3%></strong></h7>
+  <p><%=@bingdescription3%></p>
+  <a target="_blank" class="orange-text text-darken-4" href="<%=@bingurl3%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel teal lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@bingname4%></strong></h7>
+  <p><%=@bingdescription4%></p>
+  <a target="_blank" class="orange-text text-darken-4" href="<%=@bingurl4%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel teal lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@bingname5%></strong></h7>
+  <p><%=@bingdescription5%></p>
+  <a target="_blank" class="orange-text text-darken-4" href="<%=@bingurl5%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<br>
+<h6><b>From BBC News (US Edition)</b></h6>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@guardianname1%></strong></h7>
+  <p><%=@guardiandescription1%></p>
+  <a target="_blank" class="orange-text text-darken-2" href="<%=@guardianurl1%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@guardianname2%></strong></h7>
+  <p><%=@guardiandescription2%></p>
+  <a target="_blank" class="orange-text text-darken-2" href="<%=@guardianurl2%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@guardianname3%></strong></h7>
+  <p><%=@guardiandescription3%></p>
+  <a target="_blank" class="orange-text text-darken-2" href="<%=@guardianurl3%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@guardianname4%></strong></h7>
+  <p><%=@guardiandescription4%></p>
+  <a target="_blank" class="orange-text text-darken-2" href="<%=@guardianurl4%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue lighten-2">
+  <span class="black-text text lighten-2">
+  <h7><strong><%=@guardianname5%></strong></h7>
+  <p><%=@guardiandescription5%></p>
+  <a target="_blank" class="orange-text text-darken-2" href="<%=@guardianurl5%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<br>
+<h6><b>From ABC News</b></h6>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel black lighten-2">
+  <span class="white-text">
+  <h7><strong><%=@abcname1%></strong></h7>
+  <p><%=@abcdescription1%></p>
+  <a target="_blank" class="teal-text text-lighten-2" href="<%=@abcurl1%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel black lighten-2">
+  <span class="white-text">
+  <h7><strong><%=@abcname2%></strong></h7>
+  <p><%=@abcdescription2%></p>
+  <a target="_blank" class="teal-text text-lighten-2" href="<%=@abcurl2%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel black lighten-2">
+  <span class="white-text">
+  <h7><strong><%=@abcname3%></strong></h7>
+  <p><%=@abcdescription3%></p>
+  <a target="_blank" class="teal-text text-lighten-2" href="<%=@abcurl3%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel black lighten-2">
+  <span class="white-text">
+  <h7><strong><%=@abcname4%></strong></h7>
+  <p><%=@abcdescription4%></p>
+  <a target="_blank" class="teal-text text-lighten-2" href="<%=@abcurl4%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel black lighten-2">
+  <span class="white-text">
+  <h7><strong><%=@abcname5%></strong></h7>
+  <p><%=@abcdescription5%></p>
+  <a target="_blank" class="teal-text text-lighten-2" href="<%=@abcurl5%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<br>
+<h6><b>From Engadget Tech</b></h6>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue accent-4">
+  <span class="white-text">
+  <h7><strong><%=@engadgetname1%></strong></h7>
+  <p><%=@engadgetdescription1%></p>
+  <a target="_blank" class="blue-grey-text text-lighten-2" href="<%=@engadgeturl1%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue accent-4">
+  <span class="white-text">
+  <h7><strong><%=@engadgetname2%></strong></h7>
+  <p><%=@engadgetdescription2%></p>
+  <a target="_blank" class="blue-grey-text text-lighten-2" href="<%=@engadgeturl2%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue accent-4">
+  <span class="white-text">
+  <h7><strong><%=@engadgetname3%></strong></h7>
+  <p><%=@engadgetdescription3%></p>
+  <a target="_blank" class="blue-grey-text text-lighten-2" href="<%=@engadgeturl3%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue accent-4">
+  <span class="white-text">
+  <h7><strong><%=@engadgetname4%></strong></h7>
+  <p><%=@engadgetdescription4%></p>
+  <a target="_blank" class="blue-grey-text text-lighten-2" href="<%=@engadgeturl4%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m12">
+<div class="card-panel blue accent-4">
+  <span class="white-text">
+  <h7><strong><%=@engadgetname5%></strong></h7>
+  <p><%=@engadgetdescription5%></p>
+  <a target="_blank" class="blue-grey-text text-lighten-2" href="<%=@engadgeturl5%>">See full article.</a>
+  </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+<script>
+    $(document).ready(function () {
+      $('.button-collapse').sideNav();
+    });
+</script>
+<script>
+//Search for keywords within the user agent string.  When a match is found, add a corresponding class to the html element and return.  (Inspired by http://stackoverflow.com/a/10137912/114558)
+function addUserAgentClass(keywords) {
+  for(var i = 0; i < keywords.length; i++) {
+    if(navigator.userAgent.indexOf(keywords[i]) != -1) {
+      $("html").addClass(keywords[i].toLowerCase());
+      return; //Once we find and process a matching keyword, return to prevent less "specific" classes from being added
+    }
+  }
+}
+
+addUserAgentClass(["Chrome", "Firefox", "MSIE", "Safari", "Opera", "Mozilla"]); //Browsers listed generally from most-specific to least-specific
+addUserAgentClass(["Android", "iPhone", "iPad", "Linux", "Mac", "Windows"]); //Platforms, also in order of specificity
+</script>
+
+</body>
+</html>

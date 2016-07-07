@@ -1,0 +1,33 @@
+.news-container { /* This centers the user's news brief */
+
+html:not(.safari.mac) { /* All browsers except for Safari Mac */
+
+  margin: 0px 0 0 -20%;
+  margin-left: 0%;
+  left: 50%;
+    }
+  }
+
+.errorcard {
+  margin-left: 5%;
+}
+
+h6 b.mini-header {
+
+}
+
+.weathernews {
+  background-color: #fafafa;
+}
+
+div.card-panel {
+  margin: 0 auto;
+}
+
+.index-body {
+  background: url("../images/image.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
