@@ -5,6 +5,7 @@ require 'rexml/document'
 require 'xmlsimple'
 
 
+
  # In our actual program, this hash below is a giant hash of some 40000 zip codes. We shortened it, showing only the first 13 lines here for context. See more at https://jeffreybreen.wordpress.com/2010/12/11/geocode-zip-codes/ or contact the developer for the complete hash.
 @@zipshash = {
 "00210"=>{:lat => '43.005895',:long => '-71.013202',:city => 'Portsmouth'},
