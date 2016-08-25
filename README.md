@@ -4,11 +4,22 @@ Now News is an easy, personalized way to get local weather (powered by <a href="
 
 Now News is made by a student with HTML and CSS (Materialize makes it look pretty!), with the backend handled by Ruby and Sinatra. No ads, no account needed, jump right in: <a href="http://now-news.herokuapp.com" target="_blank">Now News</a>.
 
-<strong>This is Now News:</strong>
+<strong>Now News works perfectly on mobile and desktop browsers</strong>
+
+<strong>This is Now News on desktop:</strong>
 <br>
 <br>
 <img src="http://i.imgur.com/ESxGQAD.png" alt="Now News" height="550" width="900">
 <br>
 <br>
 <br>
-Before using any code from this project, please <a target="_blank" href="mailto:one.studio@outlook.com">email the developer</a>.
+<strong>This is Now News on mobile:</strong>
+<br>
+<br>
+<img src="http://i.imgur.com/VBEHtXF.png" alt="Now News Mobile" height="889" width="500">
+<br>
+<br>
+<br>
+
+
+Before using any code from this project, please <a target="_blank" href="mailto:one.studio@outlook.com?subject=Now+News+Code+Usage+Request">email the developer</a>.
