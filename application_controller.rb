@@ -5,7 +5,9 @@ require_relative 'models/model.rb'
 class MyApp < Sinatra::Base
   use Rack::Session::Cookie, :key => 'rack.session',
                            :path => '/',
-                           :secret => '[there is a secret key that usually goes into here.]'
+                           :secret => 'seeeeeecret'
+
+
 
   get '/' do
     if session[:zipcode]
@@ -18,6 +20,13 @@ class MyApp < Sinatra::Base
       redirect "/news?first_name=" + URI.encode(session[:name]) + "&zip_code=" + URI.encode(session[:zipcode])
     end
     erb :index
+  end
+
+
+  get '/bookmark' do
+    @bookmark = true
+    redirect "/"
+
   end
 
   get '/retry' do
@@ -152,7 +161,7 @@ class MyApp < Sinatra::Base
     @engadgeturl5 = engadget("url5")
     erb :weathernews
   else
-    session[:fail] = "Unfortunately, our zip code database did not recognize your inputted zip code. If what you inputted is a valid US zip code, please contact us to report the issue."
+    session[:fail] = "Our zip code database did not recognize your inputted zip code. If you inputted a valid US zip code, please contact us to report the issue."
     redirect "/retry"
   end
   else
