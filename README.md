@@ -16,7 +16,7 @@ Now News is made by a student with HTML and CSS (Materialize makes it look prett
 <strong>This is Now News on mobile:</strong>
 <br>
 <br>
-<img src="http://i.imgur.com/VBEHtXF.png" alt="Now News Mobile" height="889" width="500">
+<img src="http://i.imgur.com/VBEHtXF.png" alt="Now News Mobile" height="711" width="400">
 <br>
 <br>
 <br>
