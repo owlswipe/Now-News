@@ -7,7 +7,7 @@ Now News is made by a student with HTML and CSS (Materialize makes it look prett
 <strong>This is Now News:</strong>
 <br>
 <br>
-<img src="http://i.imgur.com/MuzlYQa.png?1" alt="Now News" height="550" width="900">
+<img src="http://i.imgur.com/ESxGQAD.png" alt="Now News" height="550" width="900">
 <br>
 <br>
 <br>
