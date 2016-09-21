@@ -4,7 +4,8 @@ require 'rubygems'
 require 'rexml/document'
 require 'xmlsimple'
 
- # In our actual program, this hash below is a giant hash of some 40000 zip codes. I shortened it, showing only the first 13 lines here for context. See more at https://jeffreybreen.wordpress.com/2010/12/11/geocode-zip-codes/ or contact the developer for the complete hash.
+
+ # In my actual program, this hash below is a giant hash of some 40000 zip codes. I shortened it, showing only the first 13 lines here for context. See more at https://jeffreybreen.wordpress.com/2010/12/11/geocode-zip-codes/ or contact the developer for the complete hash.
 @@zipshash = {
 "00210"=>{:lat => '43.005895',:long => '-71.013202',:city => 'Portsmouth'},
 "00211"=>{:lat => '43.005895',:long => '-71.013202',:city => 'Portsmouth'},
@@ -22,9 +23,6 @@ require 'xmlsimple'
 "00606"=>{:lat => '18.182151',:long => '-66.9588',:city => 'Maricao'}
 }
 
-
-
-
 @engadgetfull = ""
 
 def engadgetorig
@@ -41,44 +39,43 @@ if content == "name1"
   @engadgetresult = @engadgetfull["channel"][0]["item"][0]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
 elsif content == "description1"
   description1 = @engadgetfull["channel"][0]["item"][0]["description"].to_s
-  @engadgetresult = description1.gsub("\n", "a").split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ") + "..."
+  @engadgetresult = description1.gsub("\n", "a").split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&") + "..."
   @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "")
 elsif content == "url1"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][0]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][0]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "name2"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][1]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][1]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "description2"
   description2 = @engadgetfull["channel"][0]["item"][1]["description"].to_s
-  @engadgetresult = description2.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ") + "..."
+  @engadgetresult = description2.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
   @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "")
 elsif content == "url2"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][1]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][1]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "name3"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][2]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][2]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "description3"
   description3 = @engadgetfull["channel"][0]["item"][2]["description"].to_s
-  @engadgetresult = description3.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ") + "..."
+  @engadgetresult = description3.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
   @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "")
 elsif content == "url3"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][2]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][2]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "name4"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][3]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][3]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "description4"
   description4 = @engadgetfull["channel"][0]["item"][3]["description"].to_s
-  @engadgetresult = description4.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ") + "..."
+  @engadgetresult = description4.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
   @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "")
 elsif content == "url4"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][3]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][3]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "name5"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][4]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][4]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 elsif content == "description5"
   description5 = @engadgetfull["channel"][0]["item"][4]["description"].to_s
-  @engadgetresult = description5.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ") + "..."
+  @engadgetresult = description5.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
   @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "")
 elsif content == "url5"
-  @engadgetresult = @engadgetfull["channel"][0]["item"][4]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ")
+  @engadgetresult = @engadgetfull["channel"][0]["item"][4]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
 end
-  puts "#{content} returned #{@engadgetresult}"
   return @engadgetresult
 end
 
@@ -193,7 +190,7 @@ def guardian(content)
 
 @bingsearch = ""
 def bingorig
-  uri = URI('https://api.cognitive.microsoft.com/bing/v5.0/news/search?New-York-NY-10075&5&0&en-us&strict')
+  uri = URI('https://api.cognitive.microsoft.com/bing/v5.0/news/search?q=New-York-NY')
   uri.query = URI.encode_www_form({
       # Request parameters
       'Category' => '{string}'
@@ -210,6 +207,8 @@ def bingorig
   end
 
   @bingsearch = JSON.parse(response.body)
+  puts "bing search is"
+  puts @bingsearch
 end
 
 def bing(content)
@@ -269,7 +268,6 @@ def nyt(aorl1to5)
   # puts "Article content: " + result["results"][0]["abstract"]
   # urlofarticle = result["results"][0]["url"]
   result = ""
-  puts aorl1to5
   if aorl1to5 == "title1"
     result = @resultsnyt["results"][0]["title"]
   elsif aorl1to5 == "article1"
@@ -326,7 +324,6 @@ def get_location(tweet)
   location = location.gsub(" ", "-")
   location = location.gsub(",-", ",")
   request1 = "http://api.wunderground.com/api/8d3aaa4df5927f22/conditions/q/#{location}.json"
-  puts request1
   uri1 = URI(request1)
   response1 = Net::HTTP.get(uri1)
   parsedresponse1 = JSON.parse(response1)
@@ -476,13 +473,9 @@ end
 
 
 
-
-
-
 def zipcodetocity(zipcode)
   zip = zipcode.to_s
   city = @@zipshash[zip][:city]
-  puts city
   return city.gsub(" ", "%20")
 end
 
@@ -492,27 +485,27 @@ def zipcodetolong(zipcode)
 end
 
 def zipcodetolat(zipcode)
-  zip = zipcode.to_s
-  lat = @@zipshash[zip][:lat]
+  @zip = zipcode.to_s
+  @lat = @@zipshash[@zip][:lat]
 end
 
 def savezip(zip)
-session[:zipcode] = zip
+  response.set_cookie 'zipcode',
+    {:value=> zip, :max_age => "31556926"}
 end
 
 def savename(name)
-  session[:name] = name
+  response.set_cookie 'name',
+    {:value=> name, :max_age => "31556926"}
 end
 
 def findtime(latlong)
   # lat=47.01&lng=10.2
-  puts latlong
 
   request5 = "http://api.geonames.org/timezone?#{latlong}&username=owlswipe"
   uri5 = URI(request5)
   response5 = Net::HTTP.get(uri5)
   data = XmlSimple.xml_in(response5)
   result = data["timezone"][0]["time"][0].split(' ')[1]
-  puts result
   return result
 end
