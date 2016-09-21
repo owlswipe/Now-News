@@ -10,14 +10,8 @@ class MyApp < Sinatra::Base
 
 
   get '/' do
-    if session[:zipcode]
-      @userlocation = session[:zipcode]
-    end
-    if session[:name]
-      @username = session[:name]
-    end
-    if session[:zipcode] && session[:name]
-      redirect "/news?first_name=" + URI.encode(session[:name]) + "&zip_code=" + URI.encode(session[:zipcode])
+    if request.cookies['name'] && request.cookies['zipcode'] != "reset"
+      redirect "/news?first_name=" + URI.encode(request.cookies['name']) + "&zip_code=" + URI.encode(request.cookies['zipcode'])
     end
     erb :index
   end
@@ -37,15 +31,28 @@ class MyApp < Sinatra::Base
   end
 
   get '/setup' do
-    session[:zipcode] = nil
+    response.set_cookie 'zipcode',
+      {:value=> "reset", :max_age => "31556926"}
     redirect "/"
   end
 
   get '/news' do
     puts "Got /news"
-
-    @savename = savename(params[:first_name])
-    @savezip = savezip(params[:zip_code])
+    if request.cookies['name'] && request.cookies['zipcode'] && request.cookies['zipcode'] != "reset"
+      # do nothing
+      puts "already have cookies"
+    else
+      puts "setting zipcode and name to:"
+      puts params[:zip_code]
+      puts params[:first_name]
+      savezip(params[:zip_code])
+      savename(params[:first_name])
+     end
+    @savename = request.cookies['name']
+    @savezip = request.cookies['zipcode']
+    puts "here is saved name and saved zip:"
+    puts @savename
+    puts @savezip
     if @savezip != nil && @savezip != "" && @savename != nil && @savename != ""
       puts "a is true."
     if @savezip.length == 5 && @savezip.to_i
