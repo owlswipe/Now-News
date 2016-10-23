@@ -188,63 +188,50 @@ def guardian(content)
   end
 
 
-@bingsearch = ""
-def bingorig
-  uri = URI('https://api.cognitive.microsoft.com/bing/v5.0/news/search?q=New-York-NY')
-  uri.query = URI.encode_www_form({
-      # Request parameters
-      'Category' => '{string}'
-  })
-
-  request = Net::HTTP::Get.new(uri.request_uri)
-  # Request headers
-  request['Ocp-Apim-Subscription-Key'] = '8b8db9169b3e4e0ebcd010a16c4ce162'
-  # Request body
-  request.body = "{body}"
-
-  response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-      http.request(request)
-  end
-
-  @bingsearch = JSON.parse(response.body)
-  puts "bing search is"
-  puts @bingsearch
+@foxsportsfull = ""
+def foxsportsorig
+  request6 = "http://api.foxsports.com/v1/rss?partnerKey=zBaFxRyGKCfxBagJG9b8pqLyndmvo7UU"
+  uri6 = URI(request6)
+  response6 = Net::HTTP.get(uri6)
+  data = XmlSimple.xml_in(response6)
+  @foxsportsfull = data
+  puts data
 end
 
-def bing(content)
-  @bingresult = ""
+def foxsports(content)
+  @foxsportsresult = ""
 if content == "name1"
-  @bingresult = @bingsearch["value"][0]["name"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][0]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "description1"
-  @bingresult = @bingsearch["value"][0]["description"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][0]["description"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "").gsub(" (AP)", ":")
 elsif content == "url1"
-  @bingresult = @bingsearch["value"][0]["url"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][0]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "name2"
-  @bingresult = @bingsearch["value"][1]["name"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][1]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "description2"
-  @bingresult = @bingsearch["value"][1]["description"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][1]["description"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "").gsub(" (AP)", ":")
 elsif content == "url2"
-  @bingresult = @bingsearch["value"][1]["url"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][1]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "name3"
-  @bingresult = @bingsearch["value"][2]["name"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][2]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "description3"
-  @bingresult = @bingsearch["value"][2]["description"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][2]["description"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "").gsub(" (AP)", ":")
 elsif content == "url3"
-  @bingresult = @bingsearch["value"][2]["url"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][2]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "name4"
-  @bingresult = @bingsearch["value"][3]["name"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][3]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "description4"
-  @bingresult = @bingsearch["value"][3]["description"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][3]["description"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "").gsub(" (AP)", ":")
 elsif content == "url4"
-  @bingresult = @bingsearch["value"][3]["url"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][3]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "name5"
-  @bingresult = @bingsearch["value"][4]["name"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][4]["title"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 elsif content == "description5"
-  @bingresult = @bingsearch["value"][4]["description"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][4]["description"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "").gsub(" (AP)", ":")
 elsif content == "url5"
-  @bingresult = @bingsearch["value"][4]["url"]
+  @foxsportsresult = @foxsportsfull["channel"][0]["item"][4]["link"].to_s.gsub("[\"", "").gsub("\"]", "").gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("\\", "").gsub("Continue reading&hellip;", "")
 end
-  return @bingresult
+  return @foxsportsresult
 end
 
 
