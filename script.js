@@ -2,3 +2,6 @@
 $(document).ready(function(){
  $(".button-collapse").sideNav();
  });
+
+
+// No more JS here, everything else is in Ruby in /models/model.rb
