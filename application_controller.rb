@@ -11,7 +11,9 @@ class MyApp < Sinatra::Base
 
   get '/' do
     if request.cookies['name'] && request.cookies['zipcode'] != "reset"
-      redirect "/news?first_name=" + URI.encode(request.cookies['name']) + "&zip_code=" + URI.encode(request.cookies['zipcode'])
+    redirect "/newsfeed"
+    elsif request.cookies['name']
+    @username = request.cookies['name']
     end
     erb :index
   end
@@ -23,6 +25,10 @@ class MyApp < Sinatra::Base
 
   end
 
+  get '/ordyrlivedata' do
+    erb :ordyrlive
+  end
+
   get '/retry' do
     if session[:fail]
       @reason = session[:fail]
@@ -31,42 +37,83 @@ class MyApp < Sinatra::Base
   end
 
   get '/setup' do
+    if request.cookies['name']
+    response.set_cookie 'previousname',
+    {:value=> request.cookies['name'], :max_age => "31556926"}
+  end
     response.set_cookie 'zipcode',
       {:value=> "reset", :max_age => "31556926"}
+      response.set_cookie 'isfirstrun',
+        {:value=> "true", :max_age => "31556926"}
     redirect "/"
   end
 
+  get '/Something%20went%20wrong.' do
+    redirect "/"
+  end
+
+  get '/submit' do
+    puts "url is now " + request.url
+    uri = URI.parse(request.url.to_s)
+    uri.query
+    paramHash = Hash[URI.decode_www_form(uri.query)] # => {"id"=>"john"}
+    @nocookiefirstname = paramHash['first_name']
+    @nocookiezipcode = paramHash['zip_code']
+    if request.cookies['name'] && request.cookies['zipcode']
+    redirect '/newsfeed'
+   else
+    redirect "/newsfeed?firstname=" + URI.encode(@nocookiefirstname) + "&zipcode=" + URI.encode(@nocookiezipcode)
+  end
+  end
+
   get '/news' do
-    puts "Got /news"
+    redirect '/newsfeed'
+  end
+
+  get '/newsfeed' do
+    begin
+    puts "Got /newsfeed"
+    @savename = ""
+    @savezip = ""
     if request.cookies['name'] && request.cookies['zipcode'] && request.cookies['zipcode'] != "reset"
-      # do nothing
-      puts "already have cookies"
+      @zip_code = request.cookies['name']
+      @first_name = request.cookies['zipcode']
+      # turn session data into cookies
+      puts "found the cookies"
+      response.set_cookie 'name',
+      {:value=> request.cookies['name'], :max_age => "31556926"}
+      response.set_cookie 'zipcode',
+      {:value=> request.cookies['zipcode'], :max_age => "31556926"}
+      @savename = request.cookies['name']
+      @savezip = request.cookies['zipcode']
     else
-      puts "setting zipcode and name to:"
-      puts params[:zip_code]
-      puts params[:first_name]
-      savezip(params[:zip_code])
-      savename(params[:first_name])
+      # no cookies (yet?)
+      uri = URI.parse(request.url.to_s)
+      uri.query
+      paramHash = Hash[URI.decode_www_form(uri.query)] # => {"id"=>"john"}
+      @nocookiefirstname = paramHash['firstname']
+      @nocookiezipcode = paramHash['zipcode']
+      puts "first name is " + @nocookiefirstname + " and zip code is " + @nocookiezipcode
+      if @nocookiefirstname && @nocookiezipcode
+      @savezip = @nocookiezipcode
+      @savename = @nocookiefirstname
+      else
+      redirect '/'
+      end
      end
-    @savename = request.cookies['name']
-    @savezip = request.cookies['zipcode']
+    @first_name = @savename
+    @zip_code = @savezip.gsub(" ", "+")
     puts "here is saved name and saved zip:"
     puts @savename
     puts @savezip
-    if @savezip != nil && @savezip != "" && @savename != nil && @savename != ""
-      puts "a is true."
-    if @savezip.length == 5 && @savezip.to_i
-      puts "b is true."
-    if @@zipshash[@savezip] != nil
-      puts "c is true."
-    @savename = savename(params[:first_name])
-    @nameofuser = params[:first_name]
-    @zipcodeofuser = params[:zip_code]
-    @cityofuser = zipcodetocity(params[:zip_code])
+    @savename = savename(@first_name)
+    @nameofuser = @first_name
+    @cityofuser = zipcodetocity(@zip_code)
     @welcomearray = ["Welcome", "Hello", "Nice to see you", "Welcome back", "Hey", "Great to see you again", "Glad you're back", "Happy to see you again", "Welcome", "Hello"]
+    saveisfirstrun()
     @welcome = @welcomearray.sample
-    @long = zipcodetolong(params[:zip_code])
-    @lat = zipcodetolat(params[:zip_code])
+    @long = zipcodetolong(@zip_code)
+    @lat = zipcodetolat(@zip_code)
     title1 = "title1"
     article1 = "article1"
     link1 = "link1"
@@ -167,18 +214,9 @@ class MyApp < Sinatra::Base
     @engadgetdescription5 = engadget("description5")
     @engadgeturl5 = engadget("url5")
     erb :weathernews
-  else
-    session[:fail] = "Our zip code database did not recognize your inputted zip code. If you inputted a valid US zip code, please contact us to report the issue."
-    redirect "/retry"
-  end
-  else
-    session[:fail] = "The zip code you entered is not valid."
-    redirect "/retry"
-  end
-else
-  session[:fail] = "One of the fields did not contain any text."
-  redirect "/retry"
-
-end
+    rescue
+      session[:fail] = "You need to enter your location again. Make sure it's in a valid format, like \"10021\" or \"New York, NY\"."
+      redirect '/retry'
+    end
 end
 end
