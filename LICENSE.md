@@ -1,4 +1,4 @@
-#Now News Content License
+# Now News Content License
 
 Copyright (c) 2016 Henry Stern
 
