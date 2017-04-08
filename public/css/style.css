@@ -7,13 +7,21 @@ html:not(.safari.mac) { /* All browsers except for Safari Mac */
   left: 50%;
     }
   }
+.card {
+    height: 60%;
+    width: 90%;
+}
 
-.errorcard {
+.allerror {
   margin-left: 5%;
 }
 
 h6 b.mini-header {
 
+}
+
+.callout {
+  color:blue;
 }
 
 .weathernews {
