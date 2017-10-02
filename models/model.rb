@@ -29,8 +29,8 @@ if content == "name1"
 elsif content == "description1"
   begin
   description1 = @engadgetfull["channel"][0]["item"][0]["description"].to_s
-  @engadgetresult = description1.gsub("\n", "a").split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&") + "..."
-  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")
+  @engadgetresult = description1.gsub("\n", "a").split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
+  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "") + "..."
   rescue
   @engadgetresult = "Unfortunately, Engadget didn't send any news data. It's probably an issue on their end, but please contact me if the issue persists."
   end
@@ -49,8 +49,9 @@ elsif content == "name2"
 elsif content == "description2"
   begin
   description2 = @engadgetfull["channel"][0]["item"][1]["description"].to_s
-  @engadgetresult = description2.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
-  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")
+  puts description2
+  @engadgetresult = description2.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
+  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")  + "..."
   rescue
   @engadgetresult = ""
   end
@@ -69,8 +70,8 @@ elsif content == "name3"
 elsif content == "description3"
   begin
   description3 = @engadgetfull["channel"][0]["item"][2]["description"].to_s
-  @engadgetresult = description3.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
-  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")
+  @engadgetresult = description3.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
+  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")  + "..."
   rescue
   @engadgetresult = ""
   end
@@ -89,8 +90,8 @@ elsif content == "name4"
 elsif content == "description4"
   begin
   description4 = @engadgetfull["channel"][0]["item"][3]["description"].to_s
-  @engadgetresult = description4.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
-  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")
+  @engadgetresult = description4.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
+  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")  + "..."
   rescue
   @engadgetresult = ""
   end
@@ -109,8 +110,8 @@ elsif content == "name5"
 elsif content == "description5"
   begin
   description5 = @engadgetfull["channel"][0]["item"][4]["description"].to_s
-  @engadgetresult = description5.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")  + "..."
-  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")
+  @engadgetresult = description5.split(">")[1].split("..")[0].gsub("&quot;", "\"").gsub("&#039;", "\'").gsub("&agrave;", "á ").gsub("\n", " ").gsub("&amp;", "&")
+  @engadgetresult = @engadgetresult.gsub("\\n", "").gsub("\\t", "").gsub("\"]...", "").gsub("By Cat DiStasio", "")  + "..."
   rescue
   @engadgetresult = ""
   end
@@ -130,7 +131,7 @@ end
 def abcorig
   # this is the request that calls the Australian Broadcasting Company request4 = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://www.abc.net.au/news/feed/51120/rss.json&num=10"
   begin
-  request4 = "http://feeds.abcnews.com/abcnews/topstories"
+  request4 = "http://abcnews.go.com/abcnews/topstories"
   uri4 = URI(request4)
   response4 = Net::HTTP.get(uri4)
   data = XmlSimple.xml_in(response4)
@@ -737,6 +738,8 @@ def getnews
   add("All content copyright The New York Times.")
 end
 
+@resultsgmap = ""
+
 def zipcodetocity(zipcode)
   gmaprequest = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode + "&sensor=false"
   urigmap = URI(gmaprequest)
@@ -746,19 +749,11 @@ def zipcodetocity(zipcode)
   return @resultingcity.gsub(" ", "%20")
 end
 
-def zipcodetolong(zipcode)
-  gmaprequest = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode + "&sensor=false"
-  urigmap = URI(gmaprequest)
-  responsegmap = Net::HTTP.get(urigmap)
-  @resultsgmap = JSON.parse(responsegmap)
+def zipcodetolong(zipcode) # requires running zipcodetocity first to obtain data
   long = @resultsgmap["results"][0]["geometry"]["location"]["lng"]
 end
 
-def zipcodetolat(zipcode)
-  gmaprequest = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode + "&sensor=false"
-  urigmap = URI(gmaprequest)
-  responsegmap = Net::HTTP.get(urigmap)
-  @resultsgmap = JSON.parse(responsegmap)
+def zipcodetolat(zipcode) # requires running zipcodetocity first to obtain data
   @lat = @resultsgmap["results"][0]["geometry"]["location"]["lat"]
 end
 
