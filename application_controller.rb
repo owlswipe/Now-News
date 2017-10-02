@@ -1,4 +1,11 @@
 require 'bundler'
+require 'net/http'
+require 'json'
+require 'rubygems'
+require 'rexml/document'
+require 'xmlsimple'
+require 'date'
+
 Bundler.require
 require_relative 'models/model.rb'
 
@@ -7,6 +14,12 @@ class MyApp < Sinatra::Base
                            :path => '/',
                            :secret => 'seeeeeecret'
 
+
+  def date_of_next(day)
+  date  = Date.parse(day)
+  delta = date > Date.today ? 0 : 7
+  date + delta
+  end
 
 
   get '/' do
@@ -22,12 +35,100 @@ class MyApp < Sinatra::Base
   get '/bookmark' do
     @bookmark = true
     redirect "/"
-
   end
 
   get '/ordyrlivedata' do
     erb :ordyrlive
   end
+
+  post '/daltonmenuaction' do
+      @m2 = ""
+      @m3 = ""
+      @m4 = "" 
+      @m5 = ""
+      url1 = "hi"
+  begin
+  headers "Content-Type" => "application/json"
+  begin
+   request.body.rewind
+   @request_payload = JSON.parse request.body.read
+    @tomorrow = "today"
+    if @request_payload["result"]["resolvedQuery"].to_s.include? "tomorrow"
+       @tomorrow = "tomorrow"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Monday"
+       @tomorrow = "Monday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Tuesday"
+       @tomorrow = "Tuesday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Wednesday"
+       @tomorrow = "Wednesday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Thursday"
+       @tomorrow = "Thursday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Friday"
+       @tomorrow = "Friday"
+    end
+  rescue 
+    @tomorrow = "today"
+  end
+      theday = Time.now.getlocal('-07:00').to_date
+      if @tomorrow == "tomorrow"
+        theday = theday + 1
+      end
+      if @tomorrow == "Monday"
+        theday = date_of_next "Monday"
+      end
+      if @tomorrow == "Tuesday"
+        theday = date_of_next "Tuesday"
+      end
+      if @tomorrow == "Wednesday"
+        theday = date_of_next "Wednesday"
+      end
+      if @tomorrow == "Thursday"
+        theday = date_of_next "Thursday"
+      end
+      if @tomorrow == "Friday"
+        theday = date_of_next "Friday"
+      end
+
+
+      year = theday.year.to_i - 2000 # will break in 2100 oops
+      month = theday.month.to_i
+      day = theday.day.to_i
+      begin
+      url1 = "http://206.82.192.168/v2/menu/" + month.to_s + "/" + day.to_s + "/" + year.to_s + "/app/bigdalton?callback=angular.callbacks._6&key=3D895734-2271-4563-8332-AB943B2E9CAF&siteID=538277448587fc0fd60006fd"
+      uri1 = URI(url1)
+      response1 = Net::HTTP.get(uri1)
+      parsedresponse1 = JSON.parse(response1.gsub("/**/angular.callbacks._6", "").gsub(")", "").gsub("(", ""))
+      @m1 = "• " + parsedresponse1["meal periods"][0]["menu items"][0]["name"].to_s.split("Contains").first + ".\n"
+      @m2 = "• " + parsedresponse1["meal periods"][0]["menu items"][1]["name"].to_s.split("Contains").first + ".\n"
+      @m3 = "• " + parsedresponse1["meal periods"][0]["menu items"][2]["name"].to_s.split("Contains").first + ".\n"
+      @m4 = "• " + parsedresponse1["meal periods"][0]["menu items"][3]["name"].to_s.split("Contains").first + ".\n"
+      @m5 = "• " + parsedresponse1["meal periods"][0]["menu items"][4]["name"].to_s.split("Contains").first + ".\n"
+      @m7 = "• " + parsedresponse1["meal periods"][0]["menu items"][5]["name"].to_s.split("Contains").first + ".\n"
+      @m8 = "• " + parsedresponse1["meal periods"][0]["menu items"][6]["name"].to_s.split("Contains").first + ".\n"
+      @m9 = "• " + parsedresponse1["meal periods"][0]["menu items"][7]["name"].to_s.split("Contains").first + ".\n"
+      @m6 = "On the menu " + @tomorrow + " at Dalton are:\n" + @m1 + @m2 + @m3 + @m4 + @m5 + @m7 + @m8 + "and\n" + @m9 + "Want to know anything else?"
+      @m6 = @m6.gsub(" ,", ",").gsub(" .", ".")
+      erb :daltonmenuaction
+      rescue
+      @m1 = "No meal today!"
+      erb :daltonmenuactionfailure
+      end
+    rescue
+    end
+  end
+
+
+      # @m1 = parsedresponse1["meal periods"][0]["menu items"][0]["name"].to_s.split("Contains").first + ", "
+      # @m2 = parsedresponse1["meal periods"][0]["menu items"][1]["name"].to_s.split("Contains").first + ", "
+      # @m3 = parsedresponse1["meal periods"][0]["menu items"][2]["name"].to_s.split("Contains").first + ", "
+      # @m4 = parsedresponse1["meal periods"][0]["menu items"][3]["name"].to_s.split("Contains").first + ", "
+      # @m5 = parsedresponse1["meal periods"][0]["menu items"][4]["name"].to_s.split("Contains").first + ", "
+      # @m7 = parsedresponse1["meal periods"][0]["menu items"][5]["name"].to_s.split("Contains").first + ", and "
+      # @m8 = parsedresponse1["meal periods"][0]["menu items"][6]["name"].to_s.split("Contains").first + "."
+      # @m6 = "On the menu " + @tomorrow + " at Dalton are " + @m1 + @m2 + @m3 + @m4 + @m5 + @m7 + " Want to know anything else?"
+
+
+
 
   get '/retry' do
     if session[:fail]
