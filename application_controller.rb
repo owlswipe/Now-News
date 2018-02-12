@@ -55,7 +55,17 @@ class MyApp < Sinatra::Base
     @tomorrow = "today"
     if @request_payload["result"]["resolvedQuery"].to_s.include? "tomorrow"
        @tomorrow = "tomorrow"
-    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Monday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "monday" 
+       @tomorrow = "Monday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "tuesday"
+       @tomorrow = "Tuesday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "wednesday"
+       @tomorrow = "Wednesday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "thursday"
+       @tomorrow = "Thursday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "friday"
+       @tomorrow = "Friday"
+    elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Monday" 
        @tomorrow = "Monday"
     elsif @request_payload["result"]["resolvedQuery"].to_s.include? "Tuesday"
        @tomorrow = "Tuesday"
@@ -98,16 +108,81 @@ class MyApp < Sinatra::Base
       uri1 = URI(url1)
       response1 = Net::HTTP.get(uri1)
       parsedresponse1 = JSON.parse(response1.gsub("/**/angular.callbacks._6", "").gsub(")", "").gsub("(", ""))
-      @m1 = "• " + parsedresponse1["meal periods"][0]["menu items"][0]["name"].to_s.split("Contains").first + ".\n"
-      @m2 = "• " + parsedresponse1["meal periods"][0]["menu items"][1]["name"].to_s.split("Contains").first + ".\n"
-      @m3 = "• " + parsedresponse1["meal periods"][0]["menu items"][2]["name"].to_s.split("Contains").first + ".\n"
-      @m4 = "• " + parsedresponse1["meal periods"][0]["menu items"][3]["name"].to_s.split("Contains").first + ".\n"
-      @m5 = "• " + parsedresponse1["meal periods"][0]["menu items"][4]["name"].to_s.split("Contains").first + ".\n"
-      @m7 = "• " + parsedresponse1["meal periods"][0]["menu items"][5]["name"].to_s.split("Contains").first + ".\n"
-      @m8 = "• " + parsedresponse1["meal periods"][0]["menu items"][6]["name"].to_s.split("Contains").first + ".\n"
-      @m9 = "• " + parsedresponse1["meal periods"][0]["menu items"][7]["name"].to_s.split("Contains").first + ".\n"
-      @m6 = "On the menu " + @tomorrow + " at Dalton are:\n" + @m1 + @m2 + @m3 + @m4 + @m5 + @m7 + @m8 + "and\n" + @m9 + "Want to know anything else?"
-      @m6 = @m6.gsub(" ,", ",").gsub(" .", ".")
+      @m1 = "• " + parsedresponse1["meal periods"][0]["menu items"][0]["name"].to_s.split("Contains").first
+      @m1speak = @m1 + ".\n"
+      @m1contains = ""
+      begin
+        @m1contains = parsedresponse1["meal periods"][0]["menu items"][0]["name"].to_s.split("Contains")[1]
+        @m1 = @m1 + "(" + @m1contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m1 = @m1 + "\n"
+      end
+      @m2 = "• " + parsedresponse1["meal periods"][0]["menu items"][1]["name"].to_s.split("Contains").first
+      @m2speak = @m2 + ".\n"
+      @m2contains = ""
+      begin
+        @m2contains = parsedresponse1["meal periods"][0]["menu items"][1]["name"].to_s.split("Contains")[1]
+        @m2 = @m2 + "(" + @m2contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m2 = @m2 + "\n"
+      end
+      @m3 = "• " + parsedresponse1["meal periods"][0]["menu items"][2]["name"].to_s.split("Contains").first
+      @m3speak = @m3 + ".\n"
+      @m3contains = ""
+      begin
+        @m3contains = parsedresponse1["meal periods"][0]["menu items"][2]["name"].to_s.split("Contains")[1]
+        @m3 = @m3 + "(" + @m3contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m3 = @m3 + "\n"
+      end
+      @m4 = "• " + parsedresponse1["meal periods"][0]["menu items"][3]["name"].to_s.split("Contains").first
+      @m4speak = @m4 + ".\n"
+      @m4contains = ""
+      begin
+        @m4contains = parsedresponse1["meal periods"][0]["menu items"][3]["name"].to_s.split("Contains")[1]
+        @m4 = @m4 + "(" + @m4contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m4 = @m4 + "\n"
+      end
+      @m5 = "• " + parsedresponse1["meal periods"][0]["menu items"][4]["name"].to_s.split("Contains").first
+      @m5speak = @m5 + ".\n"
+      @m5contains = ""
+      begin
+        @m5contains = parsedresponse1["meal periods"][0]["menu items"][4]["name"].to_s.split("Contains")[1]
+        @m5 = @m5 + "(" + @m5contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m5 = @m5 + "\n"
+      end
+      @m7 = "• " + parsedresponse1["meal periods"][0]["menu items"][5]["name"].to_s.split("Contains").first
+      @m7speak = @m7 + ".\n"
+      @m7contains = ""
+      begin
+        @m7contains = parsedresponse1["meal periods"][0]["menu items"][5]["name"].to_s.split("Contains")[1]
+        @m7 = @m7 + "(" + @m7contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m7 = @m7 + "\n"
+      end
+      @m8 = "• " + parsedresponse1["meal periods"][0]["menu items"][6]["name"].to_s.split("Contains").first
+      @m8speak = @m8 + ".\n"
+      @m8contains = ""
+      begin
+        @m8contains = parsedresponse1["meal periods"][0]["menu items"][6]["name"].to_s.split("Contains")[1]
+        @m8 = @m8 + "(" + @m8contains.gsub("Contains", "") + ")" + "\n"
+      rescue
+        @m8 = @m8 + "\n"
+      end
+      @m9 = "• " + parsedresponse1["meal periods"][0]["menu items"][7]["name"].to_s.split("Contains").first
+      @m9speak = @m9 + ".\n"
+      @m9contains = ""
+      begin
+        @m9contains = parsedresponse1["meal periods"][0]["menu items"][7]["name"].to_s.split("Contains")[1]
+        @m9 = @m9 + "(" + @m9contains.gsub("Contains", "") + ")"
+      rescue
+        @m9 = @m9 # no line break for last line
+      end
+      @m6 = "On the menu " + @tomorrow + " at Dalton are:\n" + @m1 + @m2 + @m3 + @m4 + @m5 + @m7 + @m8 + @m9
+      @m6 = @m6.gsub(" ,", ",").gsub(" .", ".").gsub("( ", "(").gsub(" )", ")")
+      @m6speak = "On the menu " + @tomorrow + " at Dalton are:\n" + @m1speak + @m2speak + @m3speak + @m4speak + @m5speak + @m7speak + @m8speak + "and\n" + @m9speak + "Want to know anything else?"
       erb :daltonmenuaction
       rescue
       @m1 = "No meal today!"
