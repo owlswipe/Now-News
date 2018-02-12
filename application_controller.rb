@@ -21,7 +21,7 @@ class MyApp < Sinatra::Base
   date + delta
   end
 
-
+  
   get '/' do
     if request.cookies['name'] && request.cookies['zipcode'] != "reset"
     redirect "/newsfeed"
@@ -37,10 +37,12 @@ class MyApp < Sinatra::Base
     redirect "/"
   end
 
+  
   get '/ordyrlivedata' do
     erb :ordyrlive
   end
 
+  
   post '/daltonmenuaction' do
       @m2 = ""
       @m3 = ""
