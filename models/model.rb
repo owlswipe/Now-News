@@ -743,8 +743,8 @@ end
 def zipcodetocity(zipcode)
   gmaprequest = "http://maps.googleapis.com/maps/api/geocode/json?address=" + zipcode + "&sensor=false"
   urigmap = URI(gmaprequest)
-  responsegmap = Net::HTTP.get(urigmap)
-  @resultsgmap = JSON.parse(responsegmap)
+  @responsegmap = Net::HTTP.get(urigmap)
+  @resultsgmap = JSON.parse(@responsegmap)
   @resultingcity = @resultsgmap["results"][0]["address_components"][1]["long_name"]
   return @resultingcity.gsub(" ", "%20")
 end
