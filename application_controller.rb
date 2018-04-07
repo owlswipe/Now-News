@@ -21,7 +21,7 @@ class MyApp < Sinatra::Base
   date + delta
   end
 
-  
+
   get '/' do
     if request.cookies['name'] && request.cookies['zipcode'] != "reset"
     redirect "/newsfeed"
@@ -37,12 +37,10 @@ class MyApp < Sinatra::Base
     redirect "/"
   end
 
-  
   get '/ordyrlivedata' do
     erb :ordyrlive
   end
 
-  
   post '/daltonmenuaction' do
       @m2 = ""
       @m3 = ""
@@ -242,6 +240,70 @@ class MyApp < Sinatra::Base
    else
     redirect "/newsfeed?firstname=" + URI.encode(@nocookiefirstname) + "&zipcode=" + URI.encode(@nocookiezipcode)
   end
+  end
+
+  get '/livemaps' do
+    puts "url is now " + request.url
+
+    uri = URI.parse(request.url.to_s)
+    uri.query
+    paramHash = Hash[URI.decode_www_form(uri.query)] # => {"id"=>"john"}
+    @allStops = paramHash['stopscodes']
+    @allStopsNamed = paramHash['stopsnames']
+    @allLegs = paramHash['legs']
+    @allWeathers = paramHash['weathers']
+    @allWeatherEmojis = paramHash['weatheremojis']
+    @allWeatherEmojis = @allWeatherEmojis.gsub("clear-day", "☀️").gsub("clear-night", "🌑").gsub("partly-cloudy-day", "⛅").gsub("partly-cloudy-night", "🌑").gsub("rain", "🌧️").gsub("snow", "❄️").gsub("sleet", "🌨️").gsub("wind", "🍃").gsub("fog", "🌫️").gsub("cloudy", "☁️")
+
+    @stopsArray = @allStops.split("|")
+
+    @stopsNamedArray = @allStopsNamed.split("|")
+
+    @legsArray = @allLegs.split("|")
+
+    @weatherArray = @allWeathers.split("|")
+
+    @weatherEmojiArray = @allWeatherEmojis.split("|")
+
+
+    @liveMapsUrl = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyB5TI9veyX0wrhZ9VeaEhR3DNSC8FGDiSY&origin=" + @stopsArray[0] + "&destination=" + @stopsArray[-1]
+    @wayPointsArrayLength = @stopsArray.length - 1
+
+    for i in 1..@stopsArray.length-2 do
+
+      if i == 1
+        @liveMapsUrl = @liveMapsUrl + "&waypoints="
+
+      end
+      @liveMapsUrl = @liveMapsUrl + @stopsArray[i]
+      if i != @stopsArray.length-2
+        @liveMapsUrl = @liveMapsUrl + "|"
+      end
+    end
+
+    @liveMapsUrl = @liveMapsUrl.gsub("%26", "&").gsub("%3D", "=").gsub("%3A", ":").gsub("%2F", "/").gsub("%3F", "?").gsub(" ", "%20")
+
+    @liveMapsUrl = @liveMapsUrl + "&mode=driving" # and URL is ready for use by :livemaps
+
+    response.set_cookie 'mapsurl',
+      {:value=> @liveMapsUrl, :max_age => "31556926"}
+
+
+    # now create stops description
+
+    @liveMapsStopsDescription = ""
+
+    for i in 0..@stopsNamedArray.length-1 do
+
+      stopNumber = i + 1
+      @liveMapsStopsDescription = @liveMapsStopsDescription + stopNumber.to_s + ". " + @stopsNamedArray[i] + " (" + @weatherEmojiArray[i] + " " + @weatherArray[i] + "ºF)<br>"
+      if i != @stopsArray.length - 1
+        @liveMapsStopsDescription = @liveMapsStopsDescription + "Drive " + @legsArray[i] + "<br>"
+
+      end
+    end
+
+    erb :livemaps
   end
 
   get '/news' do
